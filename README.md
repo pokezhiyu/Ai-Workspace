@@ -38,12 +38,14 @@
 
 ## 本地启动
 
-克隆项目：
+克隆 Base Template：
 
 ```bash
-git clone https://github.com/pokezhiyu/Ai-Workspace.git
-cd Ai-Workspace
+git clone https://github.com/pokezhiyu/Ai-Workspace.git my-workspace
+cd my-workspace
 ```
+
+Workspace 会自动把原始仓库识别为模板来源，不会将它视为当前项目的 GitHub 同步目标。首次使用时，在“设置 → 同步”中连接你自己创建的 GitHub 项目仓库即可。
 
 安装依赖：
 
@@ -140,4 +142,3 @@ public/              公共静态资源
 ## 当前边界
 
 Base Template V1 以本地单人使用为主，不包含多人实时协作、云端数据库、Agent Runtime、RAG、Vector DB、知识图谱、Pull Request 管理或可视化 Git 冲突合并。
-

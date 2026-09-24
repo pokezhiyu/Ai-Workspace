@@ -93,11 +93,6 @@ async function saveManifest(): Promise<void> {
                 <option value="en-US">English（en-US）</option>
               </select>
             </label>
-            <label class="manifest-field">
-              <span>Schema Version</span>
-              <input :value="store.workspaceManifest.schemaVersion" readonly aria-readonly="true" />
-              <small>由 Workspace 维护，不随项目内容版本变化。</small>
-            </label>
           </div>
           <p v-if="errorMessage" class="manifest-form-error" role="alert">{{ errorMessage }}</p>
         </section>

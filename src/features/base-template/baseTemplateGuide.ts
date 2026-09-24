@@ -60,6 +60,7 @@ export function parseBaseTemplateRegistry(source: string): BaseTemplateRegistry 
   return {
     schemaVersion: requiredString(root.schemaVersion, 'schemaVersion'),
     id: requiredString(root.id, 'id'),
+    sourceRepository: requiredString(root.sourceRepository, 'sourceRepository'),
     current,
     versions,
   }

@@ -38,7 +38,10 @@ const diff = ref('')
 const diffTruncated = ref(false)
 
 const isRepository = computed(() => status.value?.isRepository === true)
-const isConnected = computed(() => isRepository.value && Boolean(status.value?.remote && status.value.remoteUrl))
+const isTemplateSource = computed(() => status.value?.remotePurpose === 'template-source')
+const isConnected = computed(() => isRepository.value
+  && status.value?.remotePurpose === 'project'
+  && Boolean(status.value.remote && status.value.remoteUrl))
 const changes = computed(() => status.value?.changedFiles ?? [])
 const hasConflict = computed(() => status.value?.state === 'conflict' || status.value?.state === 'diverged')
 const changeCounts = computed(() => changes.value.reduce((result, file) => {
@@ -129,6 +132,7 @@ function friendlyError(error: unknown): string {
     case 'PULL_FAILED': return error.message
     case 'NETWORK_ERROR': return '暂时无法连接 GitHub，请检查网络后重试。'
     case 'NO_REMOTE': return '当前项目还没有连接 GitHub，请先完成连接。'
+    case 'TEMPLATE_REMOTE_PROTECTED': return '当前地址是 Base Template 来源，请连接你自己的 GitHub 项目。'
     case 'NOTHING_TO_COMMIT': return '没有发现需要保存的项目修改。'
     case 'SERVICE_UNAVAILABLE': return '本地同步服务没有启动。请重新启动 Workspace 后再试。'
     case 'GIT_UNAVAILABLE': return '当前电脑没有可用的 Git。安装 Git 后即可使用 GitHub 同步。'
@@ -143,7 +147,7 @@ function applyError(error: unknown): void {
 }
 
 function syncRemoteDraft(): void {
-  if (status.value?.remoteUrl) remoteUrl.value = status.value.remoteUrl
+  remoteUrl.value = status.value?.remotePurpose === 'project' ? status.value.remoteUrl ?? '' : ''
 }
 
 async function fetchStatus(): Promise<GitRepositoryStatus> {
@@ -321,6 +325,7 @@ onMounted(() => {
 
       <section v-else-if="!isConnected" class="git-connect-section" aria-labelledby="github-connect-title">
         <div class="git-connect-heading"><span class="git-provider-icon"><GitFork :size="19" /></span><div><h2 id="github-connect-title">连接 GitHub</h2><p>连接后，可以把当前项目保存到 GitHub，也可以让其他成员获取最新项目内容。</p></div></div>
+        <p v-if="isTemplateSource" class="git-template-source-note">当前目录来自 Base Template。模板仓库不会作为项目同步目标，请连接你自己的 GitHub 项目。</p>
         <form class="git-connect-form" @submit.prevent="connectGithub">
           <label for="github-url">GitHub 项目地址</label>
           <div><input id="github-url" v-model.trim="remoteUrl" type="text" autocomplete="off" spellcheck="false" placeholder="https://github.com/用户名/项目名.git" /><button class="button primary" type="submit" :disabled="operation === 'connect' || !remoteUrl"><LoaderCircle v-if="operation === 'connect'" class="spin" :size="13" /><GitFork v-else :size="13" />{{ operation === 'connect' ? '连接中…' : '连接 GitHub' }}</button></div>
@@ -354,9 +359,9 @@ onMounted(() => {
         <summary><span>高级信息</span><ChevronDown :size="13" /></summary>
         <div class="git-advanced-content">
           <dl v-if="isRepository" class="git-config-grid">
-            <div><dt>Repository</dt><dd>{{ status?.repositoryName }}</dd></div><div><dt>Remote</dt><dd>{{ status?.remote ?? '未配置' }}</dd></div>
+            <div><dt>Repository</dt><dd>{{ status?.repositoryName }}</dd></div><div><dt>Remote</dt><dd>{{ isTemplateSource ? '未配置项目连接' : status?.remote ?? '未配置' }}</dd></div>
             <div><dt>Branch</dt><dd><GitBranch :size="12" />{{ status?.branch ?? 'detached HEAD' }}</dd></div><div><dt>Git Status</dt><dd>{{ status?.state }}</dd></div>
-            <div><dt>Commit</dt><dd>{{ status?.ahead ? `${status.ahead} 个待上传` : '无待上传提交' }}</dd></div><div class="git-config-wide"><dt>Repository URL</dt><dd><code>{{ status?.remoteUrl ?? '—' }}</code></dd></div>
+            <div><dt>Commit</dt><dd>{{ status?.ahead ? `${status.ahead} 个待上传` : '无待上传提交' }}</dd></div><div class="git-config-wide"><dt>Repository URL</dt><dd><code>{{ isTemplateSource ? '—' : status?.remoteUrl ?? '—' }}</code></dd></div>
           </dl>
           <form v-if="isConnected" class="git-advanced-remote" @submit.prevent="connectGithub"><label for="advanced-github-url">更新 GitHub 项目地址</label><div><input id="advanced-github-url" v-model.trim="remoteUrl" autocomplete="off" spellcheck="false" /><button class="button" type="submit" :disabled="Boolean(operation) || !remoteUrl">更新连接</button></div></form>
           <div v-if="technicalError" class="git-technical-error"><strong>Git Error</strong><pre>{{ technicalError }}</pre></div>

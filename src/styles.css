@@ -461,6 +461,7 @@ kbd { border: 1px solid var(--border-strong); background: var(--surface); border
 .git-connect-heading { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 13px; align-items: start; }
 .git-connect-heading h2 { margin: 1px 0 6px; font-size: 16px; letter-spacing: -.02em; }
 .git-connect-heading p { max-width: 560px; margin: 0; color: var(--text-soft); font-size: 11.5px; line-height: 1.6; }
+.git-template-source-note { max-width: 650px; margin: 16px 0 -4px 47px; color: var(--text-muted); font-size: 10.5px; line-height: 1.6; }
 .git-connect-form { max-width: 650px; margin: 22px 0 24px 47px; }
 .git-connect-form > label, .git-advanced-remote > label { display: block; margin-bottom: 7px; color: var(--text-soft); font-size: 10.5px; font-weight: 610; }
 .git-connect-form > div, .git-advanced-remote > div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
@@ -836,6 +837,7 @@ kbd { border: 1px solid var(--border-strong); background: var(--surface); border
   .git-change-list li { grid-template-columns: 42px minmax(0, 1fr); }
   .git-change-list small { grid-column: 2; }
   .git-connect-form { margin-left: 0; }
+  .git-template-source-note { margin-left: 0; }
   .git-connect-form > div, .git-advanced-remote > div { grid-template-columns: minmax(0, 1fr); }
   .git-primary-actions { grid-template-columns: minmax(0, 1fr); }
   .git-primary-actions > button { min-height: 70px; }

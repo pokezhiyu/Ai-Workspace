@@ -32,6 +32,7 @@ const config = await readJson('.workspace/config.json')
 const activeRoles = await readJson('.workspace/roles/active.json')
 const releases = await readJson('.workspace/releases/registry.json')
 const skills = await readJson('.workspace/skills/registry.json')
+const baseTemplate = await readJson('.workspace/base-template/registry.json')
 
 assert(manifest.workspace?.id === '', 'Base Template 不应预置 Workspace ID')
 assert(manifest.workspace?.name === '', 'Base Template 不应预置项目名称')
@@ -40,6 +41,7 @@ assert(activeRoles.activeRoleIds?.length === 0, 'Base Template 不应预置 Acti
 assert(releases.current === null && releases.releases?.length === 0, 'Base Template 不应预置项目 Release')
 assert(!config.contentRoots.includes('空间配置'), '系统空间配置不应进入 Knowledge Layer')
 assert(!config.spaces.some((space) => space.id === 'space-config'), '系统空间配置不应注册为专业 Space')
+assert(/^https:\/\/github\.com\/[^/]+\/[^/]+$/i.test(baseTemplate.sourceRepository), 'Base Template 必须声明稳定的源仓库标识')
 
 const allowedRolePaths = new Set([
   '产品空间/项目角色/产品经理.md',
@@ -80,6 +82,16 @@ for (const phrase of ['下一步', '选择工作角色', '跳过，稍后设置'
 const gitPlugin = await fs.readFile(path.join(root, 'server', 'workspaceGitPlugin.ts'), 'utf8')
 const statusHandler = gitPlugin.split("if (pathname === '/api/git/status')")[1]?.split("if (pathname === '/api/git/diff')")[0] ?? ''
 assert(!statusHandler.includes('materializeWorkspace'), '读取 Git 状态不应把浏览器测试快照写回 Base Template')
+for (const phrase of ['remotePurpose', 'template-source', 'TEMPLATE_REMOTE_PROTECTED']) {
+  assert(gitPlugin.includes(phrase), `Git 同步缺少模板来源保护：${phrase}`)
+}
+
+const gitSyncView = await fs.readFile(path.join(root, 'src', 'components', 'settings', 'GitSyncSettingsView.vue'), 'utf8')
+assert(gitSyncView.includes("remotePurpose === 'project'"), 'GitHub 已连接状态必须只接受项目 Remote')
+assert(gitSyncView.includes('isTemplateSource'), 'GitHub 同步界面必须隐藏模板来源地址')
+
+const manifestSettingsView = await fs.readFile(path.join(root, 'src', 'components', 'settings', 'WorkspaceManifestSettingsView.vue'), 'utf8')
+assert(!manifestSettingsView.includes('Schema Version'), '机器 Schema Version 不应出现在用户配置界面')
 
 const forbiddenFiles = [
   '.workspace/context/workspace-index.md',

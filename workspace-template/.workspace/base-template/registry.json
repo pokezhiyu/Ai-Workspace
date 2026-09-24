@@ -1,6 +1,7 @@
 {
   "schemaVersion": "1.0",
   "id": "ai-coding-workspace-base-template",
+  "sourceRepository": "https://github.com/pokezhiyu/Ai-Workspace",
   "current": "v1",
   "versions": [
     {

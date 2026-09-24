@@ -38,6 +38,7 @@ interface RepositoryStatus {
   branch: string | null
   remote: string | null
   remoteUrl: string | null
+  remotePurpose: 'none' | 'project' | 'template-source'
   upstream: string | null
   ahead: number
   behind: number
@@ -54,6 +55,7 @@ class GitCommandError extends Error {
 
 const MAX_BODY_SIZE = 20 * 1024 * 1024
 const MAX_DIFF_SIZE = 300_000
+const BASE_TEMPLATE_REGISTRY_PATH = path.join('workspace-template', '.workspace', 'base-template', 'registry.json')
 
 function runGit(args: string[], cwd: string, timeoutMs = 30_000): Promise<GitResult> {
   return new Promise((resolve, reject) => {
@@ -115,6 +117,31 @@ function safeRemoteUrl(value: string): string {
   }
 }
 
+function repositoryIdentity(value: string): string {
+  const normalized = value.trim().replace(/\\/g, '/').replace(/\.git$/i, '').replace(/\/$/, '')
+  const githubMatch = normalized.match(/github\.com(?::|\/)([^/]+)\/([^/]+)$/i)
+  return githubMatch
+    ? `github.com/${githubMatch[1]!.toLowerCase()}/${githubMatch[2]!.toLowerCase()}`
+    : normalized.toLowerCase()
+}
+
+async function baseTemplateSourceRepository(cwd: string): Promise<string | null> {
+  try {
+    const source = await fs.readFile(path.resolve(cwd, BASE_TEMPLATE_REGISTRY_PATH), 'utf8')
+    const registry = JSON.parse(source) as { sourceRepository?: unknown }
+    return typeof registry.sourceRepository === 'string' && registry.sourceRepository.trim()
+      ? registry.sourceRepository.trim()
+      : null
+  } catch {
+    return null
+  }
+}
+
+async function isTemplateSourceRemote(cwd: string, remoteUrl: string): Promise<boolean> {
+  const sourceRepository = await baseTemplateSourceRepository(cwd)
+  return Boolean(sourceRepository && repositoryIdentity(sourceRepository) === repositoryIdentity(remoteUrl))
+}
+
 function changeKind(code: string): GitChangedFile['kind'] {
   if (code === '??') return 'untracked'
   if (code.includes('U') || code === 'AA' || code === 'DD') return 'conflicted'
@@ -161,6 +188,7 @@ async function getStatus(cwd: string): Promise<RepositoryStatus> {
       branch: null,
       remote: null,
       remoteUrl: null,
+      remotePurpose: 'none',
       upstream: null,
       ahead: 0,
       behind: 0,
@@ -177,6 +205,11 @@ async function getStatus(cwd: string): Promise<RepositoryStatus> {
   const upstreamRemote = upstream.includes('/') ? upstream.split('/')[0] ?? '' : ''
   const remote = upstreamRemote || (remotes.includes('origin') ? 'origin' : remotes[0] ?? '')
   const remoteUrl = remote ? safeRemoteUrl(await gitText(['remote', 'get-url', remote], cwd).catch(() => '')) : ''
+  const remotePurpose = !remoteUrl
+    ? 'none'
+    : await isTemplateSourceRemote(cwd, remoteUrl)
+      ? 'template-source'
+      : 'project'
   const changedFiles = parseStatus(await gitText(['status', '--porcelain=v1', '--untracked-files=all'], cwd))
   let ahead = 0
   let behind = 0
@@ -208,6 +241,7 @@ async function getStatus(cwd: string): Promise<RepositoryStatus> {
     branch: branch || null,
     remote: remote || null,
     remoteUrl: remoteUrl || null,
+    remotePurpose,
     upstream: upstream || null,
     ahead,
     behind,
@@ -363,6 +397,15 @@ async function ensureRepository(cwd: string): Promise<RepositoryStatus> {
   return status
 }
 
+async function ensureProjectRemote(cwd: string): Promise<RepositoryStatus & { remote: string; remotePurpose: 'project' }> {
+  const status = await ensureRepository(cwd)
+  if (status.remotePurpose === 'template-source') {
+    throw new GitCommandError('当前 Remote 是 Base Template 来源，请先连接你自己的 GitHub 项目。', { stdout: '', stderr: '', code: 1 }, 'TEMPLATE_REMOTE_PROTECTED')
+  }
+  if (!status.remote) throw new GitCommandError('尚未配置 Git Remote，无法同步。', { stdout: '', stderr: '', code: 1 }, 'NO_REMOTE')
+  return { ...status, remote: status.remote, remotePurpose: 'project' }
+}
+
 async function commitWorkspace(cwd: string, message: string): Promise<{ status: RepositoryStatus; commit: string }> {
   if (!message.trim()) throw new Error('Commit Message 不能为空。')
   if (message.trim().length > 180) throw new Error('Commit Message 不能超过 180 个字符。')
@@ -376,8 +419,7 @@ async function commitWorkspace(cwd: string, message: string): Promise<{ status: 
 }
 
 async function pushCurrent(cwd: string): Promise<void> {
-  const status = await ensureRepository(cwd)
-  if (!status.remote) throw new GitCommandError('尚未配置 Git Remote，无法上传。', { stdout: '', stderr: '', code: 1 }, 'NO_REMOTE')
+  const status = await ensureProjectRemote(cwd)
   if (status.state === 'conflict') throw new GitCommandError('存在 Git 冲突，需要处理后继续同步。', { stdout: '', stderr: '', code: 1 }, 'GIT_CONFLICT')
   if (status.upstream) await runGit(['push'], cwd, 60_000)
   else if (status.branch) await runGit(['push', '--set-upstream', status.remote, status.branch], cwd, 60_000)
@@ -424,6 +466,9 @@ function gitMiddleware(projectRoot: string) {
       if (pathname === '/api/git/remote') {
         const current = await ensureRepository(projectRoot)
         const remote = validatedRemote(body.name, body.url)
+        if (await isTemplateSourceRemote(projectRoot, remote.url)) {
+          throw new GitCommandError('Base Template 仓库不能作为当前项目的同步地址，请连接你自己的 GitHub 项目。', { stdout: '', stderr: '', code: 1 }, 'TEMPLATE_REMOTE_PROTECTED')
+        }
         const remotes = (await gitText(['remote'], projectRoot)).split(/\r?\n/).filter(Boolean)
         if (remotes.includes(remote.name)) await runGit(['remote', 'set-url', remote.name, remote.url], projectRoot)
         else await runGit(['remote', 'add', remote.name, remote.url], projectRoot)
@@ -443,7 +488,7 @@ function gitMiddleware(projectRoot: string) {
         return sendJson(response, 200, { patch: patch.slice(0, MAX_DIFF_SIZE), truncated: patch.length > MAX_DIFF_SIZE })
       }
       if (pathname === '/api/git/pull') {
-        await ensureRepository(projectRoot)
+        await ensureProjectRemote(projectRoot)
         await materializeWorkspace(snapshotEntries(body.entries), projectRoot)
         const status = await getStatus(projectRoot)
         if (status.state === 'conflict') return sendJson(response, 409, { error: '存在 Git 冲突，需要处理后继续同步。', code: 'GIT_CONFLICT' })
@@ -475,6 +520,7 @@ function gitMiddleware(projectRoot: string) {
       }
       if (pathname === '/api/git/commit' || pathname === '/api/git/commit-push') {
         await ensureRepository(projectRoot)
+        if (pathname === '/api/git/commit-push') await ensureProjectRemote(projectRoot)
         await materializeWorkspace(snapshotEntries(body.entries), projectRoot)
         const message = typeof body.message === 'string' ? body.message : ''
         const committed = await commitWorkspace(projectRoot, message)

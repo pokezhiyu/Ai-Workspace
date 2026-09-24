@@ -13,6 +13,7 @@ export interface BaseTemplateVersionRecord {
 export interface BaseTemplateRegistry {
   schemaVersion: string
   id: string
+  sourceRepository: string
   current: string
   versions: BaseTemplateVersionRecord[]
 }

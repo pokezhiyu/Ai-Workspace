@@ -2,6 +2,7 @@ import type { WorkspaceEntry } from './workspace'
 
 export type GitChangeKind = 'added' | 'modified' | 'deleted' | 'renamed' | 'copied' | 'untracked' | 'conflicted'
 export type GitSyncState = 'not-repository' | 'clean' | 'changes' | 'conflict' | 'ahead' | 'behind' | 'diverged' | 'no-remote'
+export type GitRemotePurpose = 'none' | 'project' | 'template-source'
 
 export interface GitChangedFile {
   path: string
@@ -19,6 +20,7 @@ export interface GitRepositoryStatus {
   branch: string | null
   remote: string | null
   remoteUrl: string | null
+  remotePurpose: GitRemotePurpose
   upstream: string | null
   ahead: number
   behind: number
