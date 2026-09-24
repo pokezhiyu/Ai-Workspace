@@ -1,0 +1,41 @@
+{
+  "name": "ai-coding-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "typecheck": "vue-tsc -b --pretty false",
+    "test:agent-protocol": "node scripts/validate-agent-protocol.mjs",
+    "test:base-template": "node scripts/validate-base-template-guide.mjs",
+    "test:harness": "node scripts/validate-harness-v1.mjs",
+    "test:clean-room": "node scripts/validate-clean-room.mjs",
+    "preview": "vite preview",
+    "sync:skills": "node scripts/sync-workspace-skills.mjs"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "latest",
+    "@vueuse/core": "latest",
+    "buffer": "latest",
+    "clsx": "latest",
+    "gray-matter": "latest",
+    "highlight.js": "latest",
+    "@lucide/vue": "latest",
+    "markdown-it": "latest",
+    "markdown-it-task-lists": "latest",
+    "mermaid": "latest",
+    "pinia": "latest",
+    "tailwind-merge": "latest",
+    "tailwindcss": "latest",
+    "vue": "latest",
+    "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@vitejs/plugin-vue": "latest",
+    "typescript": "~5.9.0",
+    "vite": "latest",
+    "vue-tsc": "latest"
+  }
+}

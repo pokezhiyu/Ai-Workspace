@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "1.0",
+  "id": "ai-coding-workspace-base-template",
+  "current": "v1",
+  "versions": [
+    {
+      "id": "v1",
+      "name": "Base Template V1",
+      "version": "1.0.0",
+      "status": "current",
+      "releasedAt": "2026-09-24",
+      "guidePath": ".workspace/base-template/guides/v1.json",
+      "summary": "建立本地 Markdown 知识空间、专业 Space、Harness、Role、Skill、Release、Agent Protocol 与 GitHub 同步的稳定起点。"
+    }
+  ]
+}

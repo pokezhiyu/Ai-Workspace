@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "1.1",
+  "id": "workspace-agent-protocol",
+  "title": "Agent 协作协议",
+  "version": "1.1.0",
+  "status": "system-readonly",
+  "description": "规定任何 AI Coding Agent 如何发现、操作和交接同一个 Workspace；项目具体工作方式由 Manifest 指向的 Harness 定义。",
+  "sourceOfTruth": ".workspace/agents/protocol.json",
+  "entryFlow": [
+    {
+      "id": "manifest",
+      "label": "Workspace Manifest",
+      "source": ".workspace/manifest.json",
+      "purpose": "识别 Workspace 身份、语言与所有系统入口。"
+    },
+    {
+      "id": "protocol",
+      "label": "Agent Protocol",
+      "source": ".workspace/agents/protocol.json",
+      "purpose": "读取所有 Agent 共同遵守的系统级协议。"
+    },
+    {
+      "id": "harness",
+      "label": "Workspace Harness",
+      "source": ".workspace/harness",
+      "purpose": "读取当前项目如何加载上下文、工作、访问、使用能力和完成交接。"
+    },
+    {
+      "id": "roles",
+      "label": "Active Roles",
+      "source": ".workspace/roles/active.json",
+      "purpose": "从 Role System 获取 Human 当前工作身份与写入边界。"
+    },
+    {
+      "id": "release",
+      "label": "Current Release",
+      "source": ".workspace/releases/registry.json",
+      "purpose": "从 Release System 获取当前项目阶段及其摘要。"
+    },
+    {
+      "id": "skills",
+      "label": "Enabled Skills",
+      "source": ".workspace/skills/registry.json",
+      "purpose": "从 Skill System 获取当前已启用且健康的项目能力。"
+    },
+    {
+      "id": "knowledge",
+      "label": "Relevant Knowledge",
+      "source": ".workspace/context/workspace-index.md",
+      "purpose": "从稳定索引进入目标 Space，只加载当前任务相关知识。"
+    }
+  ],
+  "contextStrategy": {
+    "name": "Progressive Context Loading",
+    "summary": "所有 Agent 必须从统一入口渐进加载上下文；具体项目加载顺序由 Harness 定义。",
+    "allowFullWorkspaceScan": false
+  },
+  "protocols": [
+    {
+      "id": "workspace-structure",
+      "title": "Workspace 结构协议",
+      "summary": "所有 Agent 通过同一 Manifest 进入，并理解 Workspace → Space → Folder → Document 的稳定语义。",
+      "rules": [
+        "Manifest 是第一机器入口，不得创建平行入口。",
+        "Agent Protocol、Harness 与各业务系统保持单一职责。",
+        "System Layer 与 Knowledge Layer 必须分离。"
+      ]
+    },
+    {
+      "id": "context-loading",
+      "title": "Context 加载协议",
+      "summary": "所有 Agent 先读取 Protocol，再进入 Harness，并从真实系统状态渐进加载任务上下文。",
+      "rules": [
+        "不得跳过 Manifest、Protocol 或 Harness。",
+        "Role、Release 与 Skill 状态必须从各自事实来源读取。",
+        "禁止无目的读取整个 Workspace。"
+      ]
+    },
+    {
+      "id": "knowledge",
+      "title": "Knowledge 协议",
+      "summary": "所有 Agent 使用同一套 Markdown、Frontmatter、Space、Document Status 与稳定文件语义。",
+      "rules": [
+        "不得为某个 Agent 创建平行知识体系。",
+        "知识维护遵循当前 Harness 的 Knowledge Rules。",
+        "当前知识、阶段状态与文件历史不得互相替代。"
+      ]
+    },
+    {
+      "id": "work",
+      "title": "Work 协议",
+      "summary": "所有 Agent 按 Harness 的项目工作主线执行、验证并持久化必要结果。",
+      "rules": [
+        "修改前读取相关知识，修改后完成与风险相称的验证。",
+        "只有长期有效信息才写回 Workspace Knowledge。",
+        "系统协议和 Harness 变更必须作为显式配置变更处理。"
+      ]
+    },
+    {
+      "id": "skills",
+      "title": "Skill 协议",
+      "summary": "所有 Agent 通过 Workspace Skill System 发现项目能力，不依赖 Agent 私有目录。",
+      "rules": [
+        "可用状态只从 Skill Registry 获取。",
+        "使用前读取项目内 SKILL.md 并遵守其触发条件。",
+        "Harness 与 Protocol 均不保存 Skill 清单。"
+      ]
+    },
+    {
+      "id": "role-space",
+      "title": "Role / Space 协议",
+      "summary": "所有 Agent 继承 Human Active Roles，写入权限由现有 Role System 与 Guard 判断。",
+      "rules": [
+        "Agent 不得自行增加、删除或切换 Role。",
+        "不得绕过 RoleAccessService / Workspace Guard。",
+        "专业 Space 写权限不包含 System Layer。"
+      ]
+    },
+    {
+      "id": "handoff",
+      "title": "Handoff 协议",
+      "summary": "所有 Agent 将后继者视为没有当前会话历史，项目交接由 Repository 自身完成。",
+      "rules": [
+        "跨 Agent 信息必须进入持久化项目资产。",
+        "具体交接目标和完成检查由 Harness Handoff Rules 定义。",
+        "不得建立私有 Agent 状态作为项目事实来源。"
+      ]
+    },
+    {
+      "id": "git-history",
+      "title": "Git 历史协议",
+      "summary": "Git 保存增量历史和协作证据，但不替代当前有效知识或 Release 状态。",
+      "rules": [
+        "Commit 说明应让没有聊天上下文的人理解变更。",
+        "关键事实不得只留在 Commit 文本中。",
+        "冲突不得通过静默覆盖解决。"
+      ]
+    },
+    {
+      "id": "no-private-memory",
+      "title": "No Agent Memory Dependency",
+      "summary": "Project State MUST NOT depend on private Agent memory。",
+      "rules": [
+        "Agent Memory 只能辅助当前任务。",
+        "项目真实状态必须存在于 Workspace 和 Git。",
+        "Agent 退出前确认后继者可仅凭 Repository 继续工作。"
+      ]
+    }
+  ],
+  "handoff": {
+    "assumeSharedConversationHistory": false,
+    "durableTargets": [
+      "Workspace Knowledge",
+      "Code / Project Assets",
+      "ADR / Decision",
+      "Release",
+      "Git History"
+    ],
+    "privateOnlyTargets": [
+      "Agent Chat",
+      "Agent Memory",
+      "Temporary Prompt",
+      "Agent-private directory"
+    ],
+    "completionChecks": [
+      "项目资产已保存并验证。",
+      "长期有效事实已按 Harness 规则写入对应来源。",
+      "后继 Agent 不依赖当前会话即可继续工作。"
+    ]
+  },
+  "systemPolicy": {
+    "mutableByRegularAgent": false,
+    "humanUiMode": "read-only",
+    "canDisable": false,
+    "canDelete": false,
+    "bootstrapPolicy": "Agent-specific bootstrap files may only point to the Manifest and Agent Protocol; they must not copy Protocol or Harness rules."
+  }
+}

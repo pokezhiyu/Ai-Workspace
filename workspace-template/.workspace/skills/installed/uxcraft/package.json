@@ -1,0 +1,144 @@
+{
+  "name": "uxcraft",
+  "version": "1.5.4",
+  "description": "Opt-in UXCraft skill, CLI, and MCP server for AI coding agents — accessibility, design systems, UX research, and frontend handoff in one workflow.",
+  "type": "module",
+  "packageManager": "npm@10.9.2",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    },
+    "./package.json": "./package.json",
+    "./skill": "./SKILL.md",
+    "./llms": "./llms.txt",
+    "./manifest": "./ai-discovery/uxcraft.manifest.json",
+    "./cli": "./bin/uxcraft.mjs",
+    "./mcp": "./bin/uxcraft-mcp.mjs"
+  },
+  "bin": {
+    "uxcraft": "./bin/uxcraft.mjs",
+    "uxcraft-mcp": "./bin/uxcraft-mcp.mjs",
+    "ui-ux-master": "./bin/uxcraft.mjs",
+    "ui-ux-master-mcp": "./bin/uxcraft-mcp.mjs"
+  },
+  "sideEffects": false,
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "package.json",
+    "index.cjs",
+    "index.d.ts",
+    "index.mjs",
+    "references/",
+    "templates/",
+    "agent-templates/",
+    "docs/",
+    "system-prompts/",
+    "ai-discovery/",
+    "llms.txt",
+    "bin/",
+    "scripts/",
+    "tests/"
+  ],
+  "scripts": {
+    "validate": "python scripts/validate_skill.py --release",
+    "validate:release": "python scripts/validate_skill.py --release",
+    "build": "npm run check:syntax",
+    "check:syntax": "node --check index.mjs && node --check index.cjs && node --check bin/uxcraft.mjs && node --check bin/uxcraft-mcp.mjs",
+    "doctor": "node bin/uxcraft.mjs doctor --dry-run",
+    "test": "npm run test:smoke",
+    "test:smoke": "npm run check:syntax && npm run doctor",
+    "test:node": "node --test tests/*.test.mjs",
+    "ci": "npm run validate && npm run build && npm run test:smoke && npm run test:node",
+    "release:check": "npm run ci && npm run pack:dry-run",
+    "pack:dry-run": "npm pack --dry-run",
+    "prepack": "npm run validate && npm test",
+    "build:zip": "python scripts/build_deployment_zip.py"
+  },
+  "keywords": [
+    "uxcraft",
+    "ai",
+    "ai-agent",
+    "ai-agents",
+    "ai-coding",
+    "agent",
+    "ui",
+    "ux",
+    "ui-ux",
+    "user-experience",
+    "product-design",
+    "ux-research",
+    "frontend",
+    "frontend-development",
+    "design-system",
+    "design-systems",
+    "accessibility",
+    "wcag",
+    "wcag-2-2",
+    "aria",
+    "a11y",
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "cli",
+    "npx",
+    "prompt-engineering",
+    "system-prompt",
+    "ai-discovery",
+    "llms-txt",
+    "claude-code",
+    "claude",
+    "codex",
+    "windsurf",
+    "antigravity",
+    "gemini-cli",
+    "gemini",
+    "cursor",
+    "slash-command",
+    "agent-skill"
+  ],
+  "license": "MIT",
+  "author": "Rupak Biswas",
+  "contributors": [
+    {
+      "name": "Rupak Biswas"
+    }
+  ],
+  "homepage": "https://github.com/Seance1723/UXCraft#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Seance1723/UXCraft.git",
+    "directory": "."
+  },
+  "bugs": {
+    "url": "https://github.com/Seance1723/UXCraft/issues"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/Seance1723"
+  },
+  "engines": {
+    "node": ">=18.18"
+  },
+  "directories": {
+    "bin": "bin",
+    "doc": "docs",
+    "test": "tests"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "preferGlobal": true,
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.1",
+  "workspace": {
+    "id": "",
+    "name": "",
+    "description": "",
+    "language": "zh-CN"
+  },
+  "entrypoints": {
+    "baseTemplate": ".workspace/base-template/registry.json",
+    "agentProtocol": ".workspace/agents/protocol.json",
+    "harness": ".workspace/harness",
+    "spaces": ".workspace/config.json",
+    "releases": ".workspace/releases/registry.json",
+    "roles": ".workspace/roles/registry.json",
+    "skills": ".workspace/skills",
+    "agents": ".workspace/agents"
+  }
+}

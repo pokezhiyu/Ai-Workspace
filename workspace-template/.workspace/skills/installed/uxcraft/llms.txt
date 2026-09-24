@@ -1,0 +1,24 @@
+# llms.txt
+
+# UXCraft
+
+> One-stop UXCraft skill for AI coding agents. Activate with `/uxcraft` only.
+
+Important files for AI discovery:
+
+- `SKILL.md`: primary orchestration skill.
+- `README.md`: installation, usage, positioning, validation, and package details.
+- `system-prompts/uxcraft-system-add-on.md`: full system prompt add-on.
+- `system-prompts/uxcraft-compact.md`: compact add-on for short custom-instruction fields.
+- `system-prompts/uxcraft-mcp-add-on.md`: MCP usage instructions.
+- `docs/mcp-server.md`: MCP server tools, resources, prompts, and client config.
+- `docs/slash-command-compatibility.md`: cross-agent `/uxcraft` behavior.
+- `ai-discovery/uxcraft.manifest.json`: machine-readable package manifest.
+
+Activation rule:
+
+Use UXCraft only when the user includes `/uxcraft`. If the user does not include `/uxcraft`, do not apply this workflow automatically.
+
+MCP:
+
+Run `uxcraft-mcp` or `npx -y --package uxcraft uxcraft-mcp` to expose the package as local MCP tools/resources/prompts.

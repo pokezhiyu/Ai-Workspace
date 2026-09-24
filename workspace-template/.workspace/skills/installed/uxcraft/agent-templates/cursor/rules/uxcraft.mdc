@@ -1,0 +1,10 @@
+---
+description: Activate UXCraft only when the user writes /uxcraft.
+alwaysApply: false
+---
+
+# UXCraft opt-in trigger
+
+When the user writes `/uxcraft`, activate the installed UXCraft workflow. Do not use it automatically without the trigger.
+
+Follow `.uxcraft/SKILL.md` first, with installed-package fallback. Check UI/UX memory first, preserve existing brand/tokens/components, and include accessibility, responsive behavior, states, content, quality gates, and implementation handoff.

@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "name": "ui-ux-master",
+  "title": "UI/UX Master",
+  "version": "1.2.0",
+  "author": "Rupak Biswas",
+  "description": "One-stop UI/UX master skill for AI agents with opt-in /ui-ux-master activation, system prompt add-ons, project-local skill assets, and local MCP discovery.",
+  "activation": {
+    "trigger": "/ui-ux-master",
+    "mode": "opt-in-only",
+    "do_not_auto_apply_without_trigger": true
+  },
+  "entrypoints": {
+    "skill": "SKILL.md",
+    "readme": "README.md",
+    "llms": "llms.txt",
+    "mcp_server_bin": "ui-ux-master-mcp",
+    "cli_bin": "ui-ux-master"
+  },
+  "system_prompt_addons": [
+    "system-prompts/ui-ux-master-system-add-on.md",
+    "system-prompts/ui-ux-master-compact.md",
+    "system-prompts/ui-ux-master-mcp-add-on.md"
+  ],
+  "mcp": {
+    "server_name": "ui-ux-master",
+    "transport": "stdio",
+    "command": "npx",
+    "args": ["-y", "--package", "ui-ux-master", "ui-ux-master-mcp"],
+    "tools": [
+      "get_skill",
+      "list_assets",
+      "get_asset",
+      "generate_system_prompt",
+      "create_memory_template",
+      "install_instructions"
+    ],
+    "resources": [
+      "ui-ux-master://skill",
+      "ui-ux-master://readme",
+      "ui-ux-master://llms",
+      "ui-ux-master://manifest",
+      "ui-ux-master://system-prompt",
+      "ui-ux-master://compact-prompt",
+      "ui-ux-master://mcp-prompt",
+      "ui-ux-master://mcp-docs",
+      "ui-ux-master://checklist",
+      "ui-ux-master://memory-template"
+    ],
+    "prompts": [
+      "ui-ux-master",
+      "ui-ux-audit",
+      "ui-ux-redesign",
+      "ui-ux-design-system",
+      "ui-ux-accessibility-review"
+    ]
+  },
+  "supported_agents": [
+    "Claude Code",
+    "Codex",
+    "Windsurf",
+    "Antigravity",
+    "Gemini CLI",
+    "Cursor",
+    "MCP clients",
+    "Universal agents"
+  ],
+  "capabilities": [
+    "UX strategy",
+    "UX research planning",
+    "information architecture",
+    "user flows",
+    "wireframes",
+    "visual design direction",
+    "design systems",
+    "accessibility",
+    "responsive design",
+    "content design",
+    "localization",
+    "ethical UX",
+    "frontend implementation handoff",
+    "QA and acceptance criteria"
+  ]
+}

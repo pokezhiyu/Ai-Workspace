@@ -1,0 +1,151 @@
+name: Release Publish
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+    inputs:
+      publish-github-packages:
+        description: "Publish scoped mirror to GitHub Packages"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  verify:
+    name: Verify package
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.package.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install
+        run: npm ci
+
+      - name: Read package version
+        id: package
+        shell: bash
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Ensure release tag matches package version
+        if: github.event_name == 'release'
+        shell: bash
+        run: test "${{ github.event.release.tag_name }}" = "v${{ steps.package.outputs.version }}"
+
+      - name: Release checks
+        run: npm run release:check
+
+  publish-npm:
+    name: Publish to npmjs
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node for npmjs
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install
+        run: npm ci
+
+      - name: Check npmjs version
+        id: npmjs
+        shell: bash
+        run: |
+          VERSION="${{ needs.verify.outputs.version }}"
+          if npm view "ui-ux-master@$VERSION" version --registry=https://registry.npmjs.org/ >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "ui-ux-master@$VERSION already exists on npmjs; skipping publish."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish
+        if: steps.npmjs.outputs.exists != 'true'
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-github-packages:
+    name: Publish scoped GitHub Packages mirror
+    needs: verify
+    if: github.event_name == 'release' || github.event.inputs['publish-github-packages'] == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node for GitHub Packages
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com/
+          scope: "@seance1723"
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install
+        run: npm ci
+
+      - name: Prepare scoped package metadata
+        run: |
+          npm pkg set name="@seance1723/ui-ux-master"
+          npm pkg set publishConfig.registry="https://npm.pkg.github.com/"
+          npm pkg delete publishConfig.provenance
+
+      - name: Check GitHub Packages version
+        id: github_packages
+        shell: bash
+        run: |
+          VERSION="${{ needs.verify.outputs.version }}"
+          if npm view "@seance1723/ui-ux-master@$VERSION" version --registry=https://npm.pkg.github.com/ >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "@seance1723/ui-ux-master@$VERSION already exists on GitHub Packages; skipping publish."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish scoped mirror
+        if: steps.github_packages.outputs.exists != 'true'
+        run: npm publish --access public --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

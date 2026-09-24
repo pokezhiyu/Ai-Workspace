@@ -1,0 +1,187 @@
+{
+  "schemaVersion": "1.1.0",
+  "registryType": "workspace-skill-registry",
+  "generatedAt": "2026-09-24T07:12:36.513Z",
+  "sourceRoot": ".workspace/skills/installed",
+  "sourceOfTruth": "Each discovered Skill directory and its SKILL.md file.",
+  "management": {
+    "supported": [
+      "discover",
+      "inspect",
+      "enable",
+      "disable",
+      "remove-reference",
+      "health-check"
+    ],
+    "planned": [
+      "install",
+      "update"
+    ],
+    "excludedSkillIds": []
+  },
+  "discoveryRoots": [
+    {
+      "path": ".workspace/skills/installed",
+      "scope": "workspace"
+    }
+  ],
+  "skills": [
+    {
+      "id": "browser-use",
+      "name": "Browser Use",
+      "description": "Direct browser control via CDP for web interaction: automation, scraping, testing, screenshots, and site/app work.",
+      "purpose": "控制浏览器完成页面交互、自动化验证、截图与 Web 应用测试。",
+      "capabilities": [
+        "browser-automation",
+        "screenshots",
+        "ui-testing",
+        "web-interaction"
+      ],
+      "status": "enabled",
+      "enabled": true,
+      "installPath": ".workspace/skills/installed/browser-use",
+      "skillFile": ".workspace/skills/installed/browser-use/SKILL.md",
+      "version": null,
+      "source": "https://browser-use.com",
+      "metadataFiles": [
+        "SKILL.md"
+      ],
+      "fingerprint": "sha256:8124a4318791714523b1bc4702402c778bc387eef07c45f198145217d41fc4c6",
+      "scope": "workspace",
+      "deletable": true,
+      "health": {
+        "valid": true,
+        "issues": [],
+        "checkedAt": "2026-09-24T07:12:36.513Z"
+      }
+    },
+    {
+      "id": "excalidraw",
+      "name": "Excalidraw",
+      "description": "Create, inspect, and edit Excalidraw diagrams as editable `.excalidraw` JSON files. Use when Codex needs to turn architecture sketches, process flows, user journeys, system diagrams, workshop notes, whiteboard-style visuals, or Mermaid-like node-and-edge specs into an Excalidraw file; modify existing Excalidraw scenes; or prepare diagram files that the user can open and continue editing in Excalidraw.",
+      "purpose": "生成可继续编辑的产品流程、用户旅程、原型草图、思维导图与白板图。",
+      "capabilities": [
+        "editable-diagram",
+        "flowchart",
+        "mindmap",
+        "prototype",
+        "visual-documentation",
+        "whiteboard"
+      ],
+      "status": "enabled",
+      "enabled": true,
+      "installPath": ".workspace/skills/installed/excalidraw",
+      "skillFile": ".workspace/skills/installed/excalidraw/SKILL.md",
+      "version": null,
+      "source": null,
+      "metadataFiles": [
+        "SKILL.md"
+      ],
+      "fingerprint": "sha256:aacc4c2ebc7ebd5066ee4a01d5bfbebd7827b057767276a1d910c1b8c45d91c1",
+      "scope": "workspace",
+      "deletable": true,
+      "health": {
+        "valid": true,
+        "issues": [],
+        "checkedAt": "2026-09-24T07:12:36.513Z"
+      }
+    },
+    {
+      "id": "fireworks-tech-graph",
+      "name": "Fireworks Tech Graph",
+      "description": "Create precise SVG technical diagrams, export PNG or offline HTML, and animate supported semantic SVGs to GIF. Use for architecture, UML, agent, cloud or workflow diagrams; not photos, raster art or statistical charts.",
+      "purpose": "生成精确的产品流程、技术关系、架构与工作流 SVG 可视化图表。",
+      "capabilities": [
+        "architecture-diagram",
+        "flowchart",
+        "svg",
+        "technical-diagram",
+        "visual-documentation"
+      ],
+      "status": "enabled",
+      "enabled": true,
+      "installPath": ".workspace/skills/installed/fireworks-tech-graph",
+      "skillFile": ".workspace/skills/installed/fireworks-tech-graph/SKILL.md",
+      "version": "1.2.0",
+      "source": "https://github.com/yizhiyanhua-ai/fireworks-tech-graph",
+      "metadataFiles": [
+        "SKILL.md",
+        "package.json"
+      ],
+      "fingerprint": "sha256:e499af84ccb5e1e7a7bf4cc9d7bfa1d58cd10e63533236874543b36159064653",
+      "scope": "workspace",
+      "deletable": true,
+      "health": {
+        "valid": true,
+        "issues": [],
+        "checkedAt": "2026-09-24T07:12:36.513Z"
+      }
+    },
+    {
+      "id": "frontend-design",
+      "name": "Frontend Design",
+      "description": "Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults.",
+      "purpose": "为前端界面提供有明确审美方向的视觉设计、排版、布局与交互表达指导。",
+      "capabilities": [
+        "design-system",
+        "frontend-design",
+        "typography",
+        "ui-design",
+        "visual-design",
+        "visual-documentation"
+      ],
+      "status": "enabled",
+      "enabled": true,
+      "installPath": ".workspace/skills/installed/frontend-design",
+      "skillFile": ".workspace/skills/installed/frontend-design/SKILL.md",
+      "version": null,
+      "source": null,
+      "metadataFiles": [
+        "SKILL.md"
+      ],
+      "fingerprint": "sha256:d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3",
+      "scope": "workspace",
+      "deletable": true,
+      "health": {
+        "valid": true,
+        "issues": [],
+        "checkedAt": "2026-09-24T07:12:36.513Z"
+      }
+    },
+    {
+      "id": "uxcraft",
+      "name": "UXCraft",
+      "description": "Use when an agent must design, audit, improve, prototype, specify, or hand off any UI/UX work end-to-end. Provides one-stop UX strategy, research, IA, flows, wireframes, visual design, design systems, accessibility, usability testing, conversion, and engineering handoff workflows.",
+      "purpose": "支持产品设计、信息架构、交互流程、原型规范、可访问性与前端交付。",
+      "capabilities": [
+        "accessibility",
+        "design-system",
+        "flowchart",
+        "product-design",
+        "prototype",
+        "ui-testing",
+        "ux-audit",
+        "visual-documentation"
+      ],
+      "status": "enabled",
+      "enabled": true,
+      "installPath": ".workspace/skills/installed/uxcraft",
+      "skillFile": ".workspace/skills/installed/uxcraft/SKILL.md",
+      "version": "1.5.4",
+      "source": "https://github.com/Seance1723/UXCraft",
+      "metadataFiles": [
+        "SKILL.md",
+        "package.json",
+        "ai-discovery/uxcraft.manifest.json"
+      ],
+      "fingerprint": "sha256:107fbb360457c4a64c84f7c05b2428d60c689d1acc1f4063056f688734154a95",
+      "scope": "workspace",
+      "deletable": true,
+      "health": {
+        "valid": true,
+        "issues": [],
+        "checkedAt": "2026-09-24T07:12:36.513Z"
+      }
+    }
+  ]
+}

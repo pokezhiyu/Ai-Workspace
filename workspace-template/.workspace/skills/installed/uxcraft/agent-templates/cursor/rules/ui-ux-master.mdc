@@ -1,0 +1,10 @@
+---
+description: Activate UI/UX Master only when the user writes /ui-ux-master.
+alwaysApply: false
+---
+
+# UI/UX Master opt-in trigger
+
+When the user writes `/ui-ux-master`, activate the installed UI/UX Master workflow. Do not use it automatically without the trigger.
+
+Follow `.ui-ux-master/SKILL.md` first, with installed-package fallback. Check UI/UX memory first, preserve existing brand/tokens/components, and include accessibility, responsive behavior, states, content, quality gates, and implementation handoff.

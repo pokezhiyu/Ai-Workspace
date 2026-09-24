@@ -1,0 +1,29 @@
+name: Bug report
+description: Report a problem with the CLI, MCP server, package assets, or agent templates.
+title: "Bug: "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Include the command, agent, operating system, Node version, and relevant output.
+      placeholder: |
+        node --version
+        npm --version
+        npx ui-ux-master install --project --dry-run
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, logs, package manager details, or agent configuration.

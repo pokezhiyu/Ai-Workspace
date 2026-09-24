@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0",
+  "activeRolesPath": ".workspace/roles/active.json",
+  "roles": [
+    {
+      "id": "product",
+      "path": "产品空间/项目角色/产品经理.md",
+      "spaceId": "product"
+    },
+    {
+      "id": "design",
+      "path": "设计空间/项目角色/UI-UX-设计师.md",
+      "spaceId": "design"
+    },
+    {
+      "id": "engineering",
+      "path": "技术空间/项目角色/开发工程师.md",
+      "spaceId": "engineering"
+    },
+    {
+      "id": "quality",
+      "path": "测试空间/项目角色/QA-工程师.md",
+      "spaceId": "quality"
+    },
+    {
+      "id": "operations",
+      "path": "运维空间/项目角色/运维工程师.md",
+      "spaceId": "operations"
+    }
+  ]
+}

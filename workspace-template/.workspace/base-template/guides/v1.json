@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "1.0",
+  "id": "base-template-guide-v1",
+  "templateVersion": "v1",
+  "productName": "AI Coding Workspace",
+  "title": "Base Template V1",
+  "description": "一套让项目知识、工作规则和 AI 协作上下文长期留在项目里的本地工作空间模板。",
+  "introduction": [
+    "它把产品、设计、技术、测试和运维知识放进清晰的 Markdown 文件与目录，让人可以直接阅读，也让 AI Agent 能按统一入口理解项目。",
+    "它适合需要长期维护需求、架构、决策、测试证据和发布记录的项目。项目状态保存在 Workspace 与 Git 中，而不是只留在聊天记录里。"
+  ],
+  "glossary": [
+    {
+      "term": "Space",
+      "plainName": "专业空间",
+      "description": "按职责组织知识的一级区域，例如产品空间、设计空间、技术空间、测试空间和运维空间。"
+    },
+    {
+      "term": "Harness",
+      "plainName": "项目给 AI 的工作说明书",
+      "description": "告诉 Agent 应先读什么、遵守哪些文档和命名规则、怎样选择上下文，以及工作后要更新哪些项目知识。"
+    },
+    {
+      "term": "Skill",
+      "plainName": "项目携带的额外能力",
+      "description": "例如界面设计、浏览器测试或图表生成。正式 Skill 保存在项目内，可以跟随 Git 到另一台电脑。"
+    },
+    {
+      "term": "Agent Protocol",
+      "plainName": "不同 AI 的共同协作协议",
+      "description": "保证 Codex、Claude Code、DeepSeek 或未来 Agent 都从同一入口理解项目，并能接续前一个 Agent 的工作。"
+    },
+    {
+      "term": "Release",
+      "plainName": "项目阶段记录",
+      "description": "说明当前正在推进哪个阶段、目标是什么，以及已经完成了哪些重要变化。"
+    }
+  ],
+  "modules": [
+    {
+      "id": "knowledge",
+      "title": "项目知识与目录树",
+      "canDo": "浏览多层目录，搜索标题、路径、正文和 Metadata；新建、重命名、复制、删除或拖动文件与文件夹。",
+      "howToUse": "从左侧选择 Space 和文档；使用搜索框或 Ctrl / Command + K 快速定位。系统配置目录不会混入普通知识树。"
+    },
+    {
+      "id": "markdown",
+      "title": "Markdown 阅读与编辑",
+      "canDo": "阅读排版后的 Markdown，查看 Frontmatter 文档信息、代码高亮、Mermaid 图表、本页目录和章节 Minimap。",
+      "howToUse": "打开文档后在 Read / Edit 间切换；修改后保存。离开未保存内容时 Workspace 会提醒。"
+    },
+    {
+      "id": "spaces",
+      "title": "专业 Space",
+      "canDo": "把产品、设计、技术、测试和运维知识放在稳定的职责范围中，同时保留跨 Space 阅读和引用。",
+      "howToUse": "先确定任务主要属于哪个 Space，再维护对应文档；跨专业任务按 Related Documents 继续读取。"
+    },
+    {
+      "id": "workspace-settings",
+      "title": "Workspace 配置",
+      "canDo": "查看和修改项目名称、项目介绍与默认语言，并查看初始化后固定的 Workspace ID。",
+      "howToUse": "进入设置 → Workspace 配置。首次初始化会根据项目名称生成 Workspace ID；保存后名称会同步显示在左上角，ID 不再变化。"
+    },
+    {
+      "id": "roles",
+      "title": "角色与写入范围",
+      "canDo": "从真实角色文档发现产品、设计、工程、测试和运维职责；当前 Human 选择的 Active Roles 决定哪些专业 Space 可写。",
+      "howToUse": "进入设置 → 角色配置选择当前工作身份。所有专业知识可读，但写入仍经过 Space Guard。"
+    },
+    {
+      "id": "skills",
+      "title": "Workspace Skills",
+      "canDo": "发现项目内 Skill，查看用途、能力与健康状态，并进行启用、禁用、重新扫描、导入候选或安全删除。",
+      "howToUse": "进入设置 → Skill 配置。Agent 只会获得已启用且健康的项目 Skill，并在使用前读取对应 SKILL.md。"
+    },
+    {
+      "id": "releases",
+      "title": "Project Release",
+      "canDo": "查看当前阶段和历史阶段，创建规划版本、设为当前、维护阶段摘要并完成发布。",
+      "howToUse": "进入设置 → 项目版本，查看或维护项目当前阶段和历史记录。"
+    },
+    {
+      "id": "agents",
+      "title": "Agent 协作协议",
+      "canDo": "让不同 AI Agent 按 Manifest、Protocol、Harness、Role、Release、Skill 和相关知识的统一顺序理解项目。",
+      "howToUse": "进入设置 → Agent 设置查看只读协议。需要交接的事实必须进入代码、知识、ADR、Release 或 Git。"
+    },
+    {
+      "id": "git-sync",
+      "title": "GitHub 同步",
+      "canDo": "连接 GitHub、获取最新内容、查看本次修改，并填写工作说明后保存和上传。",
+      "howToUse": "进入设置 → 同步。日常使用三个中文操作；Repository、Branch、Diff 和错误详情收在高级信息中。"
+    },
+    {
+      "id": "theme-layout",
+      "title": "阅读与界面",
+      "canDo": "在 Light、Dark、System 主题间切换，折叠左右面板并调整知识侧栏宽度。",
+      "howToUse": "使用右上角主题按钮和侧栏控制；正文宽度、本页目录和 Minimap 会保持阅读优先。"
+    }
+  ],
+  "firstRunSteps": [
+    "首次打开时先完善项目信息，再选择当前工作角色；也可以跳过角色并稍后在设置中选择。",
+    "初始化完成后，点击本页的“快速开始”进入当前项目默认首页。",
+    "在“开始阅读”中确认项目介绍、目标、范围和当前阶段。",
+    "根据任务进入产品、设计、技术、测试或运维 Space。",
+    "需要调整职责或跳过了初始化角色选择时，到设置 → 角色配置确认当前 Active Roles。",
+    "需要额外能力时，到设置 → Skill 配置确认相关 Skill 已启用且健康。",
+    "完成工作后更新长期有效的知识；重要决策写入 ADR，阶段变化更新 Release。",
+    "需要团队共享时，到设置 → 同步查看修改并保存上传。"
+  ],
+  "harness": {
+    "title": "Harness：项目给 AI Agent 的工作说明书",
+    "paragraphs": [
+      "Harness 告诉 Agent 如何从项目入口开始、怎样按任务选择 Space 和相关文档、如何使用 Role 与 Skill，以及修改代码前后应该检查什么。",
+      "Base Template 已提供 Context、Knowledge、Work、Access、Skill、Release 与 Handoff 七类 Harness 规则。项目初始化后，可以随着真实需要继续增加 API、数据库、测试、安全或发布等项目规则，但不要复制 Role、Skill、Release 的运行时状态。",
+      "普通开发任务不应让 Agent 偷偷改变 Harness。正式修改 Harness 代表项目工作规则发生变化，应有明确目的、同步相关说明，并进入 Git 历史。"
+    ],
+    "agentFlow": [
+      "读取 Manifest，确认当前 Workspace 与各模块入口",
+      "读取 Agent Protocol 与 Harness",
+      "继承 Human Active Roles，识别 Current Release",
+      "按需选择 Enabled Skills 与相关 Space 知识",
+      "执行任务，并把长期信息写回项目"
+    ]
+  },
+  "collaboration": {
+    "title": "Human 与不同 Agent 如何协作",
+    "description": "Human 决定目标、角色和最终取舍；Agent 按统一入口读取项目并执行任务。任何 Agent 都不能假设下一个 Agent 拥有自己的聊天记录。",
+    "handoffRule": "可持续的交接内容必须留在 Workspace Knowledge、Code、ADR / Decision、Current Release 或 Git History 中。"
+  },
+  "extensions": [
+    "增加新的项目知识、文档和目录",
+    "按真实团队调整专业 Space 内容",
+    "补充 Project Harness 与项目规则",
+    "导入或新增跟随项目的 Skills",
+    "继续建立新的 Project Release",
+    "记录 ADR / Decision、规范和交付流程"
+  ],
+  "limitations": [
+    "当前以本机浏览器存储为主，没有后端、数据库或多人实时协作；同一浏览器配置中的内容会自动保留。",
+    "GitHub 同步依赖本机 Git、当前开发服务和系统已有的 GitHub 登录凭据；冲突不会自动覆盖，需要人工处理。",
+    "当前没有 Branch 管理、Pull Request、Code Review 或可视化冲突合并工具。",
+    "Role / Space 主要用于知识职责和写入保护，不是企业级安全权限系统；专业知识默认全局可读。",
+    "Agent 设置目前只提供只读协作协议，没有 Agent Runtime、模型管理、多 Agent 调度或聊天系统。",
+    "Skill 管理不包含 Marketplace、在线搜索、自动安装或自动更新；外部 Skill 需先导入项目内再正式使用。",
+    "编辑器是可靠的 Markdown 源码编辑器，不是 Notion 式 Block Editor；当前也没有 RAG、Vector DB 或知识图谱。"
+  ]
+}

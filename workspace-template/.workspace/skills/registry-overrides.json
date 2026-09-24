@@ -1,0 +1,27 @@
+{
+  "browser-use": {
+    "name": "Browser Use",
+    "purpose": "控制浏览器完成页面交互、自动化验证、截图与 Web 应用测试。",
+    "capabilities": ["browser-automation", "web-interaction", "ui-testing", "screenshots"]
+  },
+  "excalidraw": {
+    "name": "Excalidraw",
+    "purpose": "生成可继续编辑的产品流程、用户旅程、原型草图、思维导图与白板图。",
+    "capabilities": ["editable-diagram", "flowchart", "prototype", "mindmap", "whiteboard"]
+  },
+  "fireworks-tech-graph": {
+    "name": "Fireworks Tech Graph",
+    "purpose": "生成精确的产品流程、技术关系、架构与工作流 SVG 可视化图表。",
+    "capabilities": ["technical-diagram", "architecture-diagram", "flowchart", "svg", "visual-documentation"]
+  },
+  "frontend-design": {
+    "name": "Frontend Design",
+    "purpose": "为前端界面提供有明确审美方向的视觉设计、排版、布局与交互表达指导。",
+    "capabilities": ["frontend-design", "ui-design", "visual-design", "typography", "design-system"]
+  },
+  "uxcraft": {
+    "name": "UXCraft",
+    "purpose": "支持产品设计、信息架构、交互流程、原型规范、可访问性与前端交付。",
+    "capabilities": ["product-design", "prototype", "ux-audit", "accessibility", "design-system"]
+  }
+}

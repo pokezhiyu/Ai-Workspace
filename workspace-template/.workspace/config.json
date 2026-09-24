@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.0.0",
+  "templateVersion": "1.0.0",
+  "defaultDocument": "开始阅读/项目入口/项目介绍.md",
+  "contentRoots": [
+    "开始阅读",
+    "产品空间",
+    "设计空间",
+    "技术空间",
+    "测试空间",
+    "运维空间"
+  ],
+  "spaces": [
+    {
+      "id": "start",
+      "name": "开始阅读",
+      "path": "开始阅读",
+      "description": "项目入口、协作方式与 Workspace 使用说明。",
+      "purpose": "让所有成员与 Agent 在进入项目前建立一致上下文。",
+      "order": 10,
+      "status": "active"
+    },
+    {
+      "id": "product",
+      "name": "产品空间",
+      "path": "产品空间",
+      "description": "产品规划、需求定义与迭代管理。",
+      "purpose": "沉淀产品目标、范围、需求与版本节奏。",
+      "order": 20,
+      "status": "active"
+    },
+    {
+      "id": "design",
+      "name": "设计空间",
+      "path": "设计空间",
+      "description": "设计规范、交互方案与界面设计。",
+      "purpose": "维护体验原则、关键流程和可交付设计说明。",
+      "order": 30,
+      "status": "active"
+    },
+    {
+      "id": "engineering",
+      "name": "技术空间",
+      "path": "技术空间",
+      "description": "系统架构、前后端实现与技术决策。",
+      "purpose": "为技术负责人、工程师与 Coding Agent 提供工程上下文。",
+      "order": 40,
+      "status": "active"
+    },
+    {
+      "id": "quality",
+      "name": "测试空间",
+      "path": "测试空间",
+      "description": "测试计划、用例与验收结论。",
+      "purpose": "建立从需求到验收的质量证据链。",
+      "order": 50,
+      "status": "active"
+    },
+    {
+      "id": "operations",
+      "name": "运维空间",
+      "path": "运维空间",
+      "description": "部署、环境配置与发布记录。",
+      "purpose": "沉淀可重复的交付、运行和回溯信息。",
+      "order": 60,
+      "status": "active"
+    }
+  ],
+  "roleSpaceModel": {
+    "mode": "role-based-write",
+    "primarySpaceField": "primarySpaceId",
+    "accessibleSpacesField": "accessibleSpaceIds",
+    "accessControlEnabled": true,
+    "activeRolesPath": ".workspace/roles/active.json"
+  },
+  "archivePatterns": [
+    "**/归档/**"
+  ],
+  "principles": [
+    "markdown-first",
+    "file-first",
+    "git-friendly",
+    "progressive-context"
+  ],
+  "skillRegistry": ".workspace/skills/registry.json",
+  "nativeCapabilities": [
+    "markdown",
+    "mermaid"
+  ]
+}
