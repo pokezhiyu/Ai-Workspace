@@ -9,10 +9,11 @@
     "purpose": "生成可继续编辑的产品流程、用户旅程、原型草图、思维导图与白板图。",
     "capabilities": ["editable-diagram", "flowchart", "prototype", "mindmap", "whiteboard"]
   },
-  "fireworks-tech-graph": {
-    "name": "Fireworks Tech Graph",
-    "purpose": "生成精确的产品流程、技术关系、架构与工作流 SVG 可视化图表。",
-    "capabilities": ["technical-diagram", "architecture-diagram", "flowchart", "svg", "visual-documentation"]
+  "ai-figure": {
+    "name": "AI Figure",
+    "purpose": "生成产品规划所需的思维导图、流程图、泳道图、甘特图、象限图、时间线与状态图。",
+    "capabilities": ["planning-diagram", "mindmap", "flowchart", "swimlane", "gantt", "quadrant", "timeline", "state-diagram", "svg", "visual-documentation"],
+    "source": "https://github.com/hustcc/ai-figure"
   },
   "frontend-design": {
     "name": "Frontend Design",
@@ -23,5 +24,11 @@
     "name": "UXCraft",
     "purpose": "支持产品设计、信息架构、交互流程、原型规范、可访问性与前端交付。",
     "capabilities": ["product-design", "prototype", "ux-audit", "accessibility", "design-system"]
+  },
+  "web-artifacts-builder": {
+    "name": "Web Artifacts Builder",
+    "purpose": "将关键功能与用户流程制作成可点击、可切换状态的独立交互原型。",
+    "capabilities": ["interactive-prototype", "clickable-prototype", "html-artifact", "state-management", "ui-flow", "visual-documentation"],
+    "source": "https://github.com/anthropics/skills/tree/main/skills/web-artifacts-builder"
   }
 }

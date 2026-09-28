@@ -7,11 +7,11 @@
     {
       "id": "v1",
       "name": "Base Template V1",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "status": "current",
       "releasedAt": "2026-09-24",
       "guidePath": ".workspace/base-template/guides/v1.json",
-      "summary": "建立本地 Markdown 知识空间、专业 Space、Harness、Role、Skill、Release、Agent Protocol 与 GitHub 同步的稳定起点。"
+      "summary": "建立本地 Markdown 知识空间、专业 Space、Harness、Role、可自动匹配的产品设计与交互原型 Skills、Release、Agent Protocol 与 GitHub 同步的稳定起点。"
     }
   ]
 }

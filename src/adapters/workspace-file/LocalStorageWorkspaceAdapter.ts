@@ -259,8 +259,8 @@ function migrateBaseTemplateVersion(entries: WorkspaceEntry[]): void {
   if (!configEntry?.content) return
   try {
     const raw: unknown = JSON.parse(configEntry.content)
-    if (!isRecord(raw) || raw.templateVersion !== '3.0.0') return
-    raw.templateVersion = '1.0.0'
+    if (!isRecord(raw) || !['3.0.0', '1.0.0'].includes(String(raw.templateVersion ?? ''))) return
+    raw.templateVersion = '1.0.1'
     entries[index] = { ...configEntry, content: `${JSON.stringify(raw, null, 2)}\n`, updatedAt: now() }
   } catch {
     // Invalid configuration remains untouched for manual recovery.

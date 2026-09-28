@@ -28,7 +28,7 @@ const excludedSkillIds = Array.isArray(previousRegistry.management?.excludedSkil
   : []
 
 const capabilityRules = [
-  ['browser-automation', /browser|cdp|web interaction|automation/i],
+  ['browser-automation', /browser-use|browser automation|browser control|cdp|web interaction/i],
   ['ui-testing', /testing|test automation|screenshot/i],
   ['editable-diagram', /excalidraw|editable.*diagram|whiteboard/i],
   ['technical-diagram', /technical diagram|uml|architecture diagram/i],
@@ -106,7 +106,7 @@ const discovered = discoveryRoots.flatMap((root) => !existsSync(root.physicalPat
       installPath: `${root.path}/${id}`,
       skillFile: `${root.path}/${id}/SKILL.md`,
       version: String(frontmatter.version || packageMetadata?.version || '').trim() || null,
-      source: normalizeSource(repository || frontmatter.homepage || packageMetadata?.homepage),
+      source: normalizeSource(workspaceMetadata.source || repository || frontmatter.homepage || packageMetadata?.homepage),
       metadataFiles: [...(sourceText ? ['SKILL.md'] : []), ...metadataFiles(directory, id)],
       fingerprint: `sha256:${createHash('sha256').update(sourceText || `${id}:${issues.join('|')}`).digest('hex')}`,
       scope: root.scope,

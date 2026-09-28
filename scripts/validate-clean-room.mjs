@@ -61,10 +61,22 @@ const unexpectedKnowledge = contentRootFiles.filter((filePath) => !allowedRolePa
 assert(unexpectedKnowledge.length === 0, `发现项目实例知识：${unexpectedKnowledge.join(', ')}`)
 
 assert(skills.sourceRoot === '.workspace/skills/installed', 'Skill Source of Truth 必须位于 Workspace 内')
+const expectedDefaultSkillIds = [
+  'ai-figure',
+  'browser-use',
+  'excalidraw',
+  'frontend-design',
+  'uxcraft',
+  'web-artifacts-builder',
+]
+const actualDefaultSkillIds = skills.skills.map((skill) => skill.id).sort()
+assert(JSON.stringify(actualDefaultSkillIds) === JSON.stringify(expectedDefaultSkillIds), `默认 Skill 组合不正确：${actualDefaultSkillIds.join(', ')}`)
 for (const skill of skills.skills) {
   assert(!/^[A-Za-z]:[\\/]|^\/Users\/|^\/home\//.test(skill.installPath), `Skill ${skill.id} 使用机器绝对路径`)
+  assert(skill.status === 'enabled' && skill.enabled === true && skill.health?.valid === true, `默认 Skill ${skill.id} 必须处于可用状态`)
   await fs.access(resolveTemplate(skill.skillFile))
 }
+assert(!actualDefaultSkillIds.includes('fireworks-tech-graph'), 'Fireworks Tech Graph 已被 AI Figure 替换，不应继续出现在默认模板')
 
 const initializer = await fs.readFile(path.join(root, 'src', 'features', 'workspace', 'WorkspaceInitializationService.ts'), 'utf8')
 for (const requiredPath of [

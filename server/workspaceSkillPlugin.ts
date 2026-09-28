@@ -55,7 +55,7 @@ interface SkillImportCandidate {
 }
 
 const capabilityRules: Array<[string, RegExp]> = [
-  ['browser-automation', /browser|cdp|web interaction|automation/i],
+  ['browser-automation', /browser-use|browser automation|browser control|cdp|web interaction/i],
   ['ui-testing', /testing|test automation|screenshot/i],
   ['editable-diagram', /excalidraw|editable.*diagram|whiteboard/i],
   ['technical-diagram', /technical diagram|uml|architecture diagram/i],
@@ -179,7 +179,7 @@ async function readSkillMetadata(
     purpose: String(workspaceMetadata.purpose ?? description).trim() || '未提供用途说明。',
     capabilities: [...new Set([...declaredCapabilities, ...inferredCapabilities])].sort(),
     version: String(frontmatter.version ?? packageMetadata?.version ?? '').trim() || null,
-    source: normalizeSource(repositoryUrl(packageMetadata) ?? frontmatter.homepage ?? packageMetadata?.homepage),
+    source: normalizeSource(workspaceMetadata.source ?? repositoryUrl(packageMetadata) ?? frontmatter.homepage ?? packageMetadata?.homepage),
     metadataFiles: [...(sourceText ? ['SKILL.md'] : []), ...await metadataFiles(directory, id)],
     fingerprint: `sha256:${createHash('sha256').update(sourceText || `${id}:${issues.join('|')}`).digest('hex')}`,
     health: { valid: issues.length === 0, issues, checkedAt },

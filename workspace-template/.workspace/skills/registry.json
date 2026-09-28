@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.1.0",
   "registryType": "workspace-skill-registry",
-  "generatedAt": "2026-09-24T07:12:36.513Z",
+  "generatedAt": "2026-09-28T10:00:38.831Z",
   "sourceRoot": ".workspace/skills/installed",
   "sourceOfTruth": "Each discovered Skill directory and its SKILL.md file.",
   "management": {
@@ -26,6 +26,42 @@
     }
   ],
   "skills": [
+    {
+      "id": "ai-figure",
+      "name": "AI Figure",
+      "description": "Generate clean SVG diagrams (flowchart, tree, mindmap, architecture, sequence, quadrant, gantt, state machine, ER, timeline, swimlane, bubble chart, radar chart) from a markdown string or a JSON config via fig(). Auto-layout, zero coordinates needed. Works in browser and Node.js.",
+      "purpose": "生成产品规划所需的思维导图、流程图、泳道图、甘特图、象限图、时间线与状态图。",
+      "capabilities": [
+        "flowchart",
+        "gantt",
+        "mindmap",
+        "planning-diagram",
+        "quadrant",
+        "state-diagram",
+        "svg",
+        "swimlane",
+        "timeline",
+        "visual-documentation"
+      ],
+      "status": "enabled",
+      "enabled": true,
+      "installPath": ".workspace/skills/installed/ai-figure",
+      "skillFile": ".workspace/skills/installed/ai-figure/SKILL.md",
+      "version": "1.0.0",
+      "source": "https://github.com/hustcc/ai-figure",
+      "metadataFiles": [
+        "SKILL.md",
+        "package.json"
+      ],
+      "fingerprint": "sha256:c884a78a163dc37e924f5382754c0003fd487652e87298506951bca5e9316077",
+      "scope": "workspace",
+      "deletable": true,
+      "health": {
+        "valid": true,
+        "issues": [],
+        "checkedAt": "2026-09-28T10:00:38.831Z"
+      }
+    },
     {
       "id": "browser-use",
       "name": "Browser Use",
@@ -52,7 +88,7 @@
       "health": {
         "valid": true,
         "issues": [],
-        "checkedAt": "2026-09-24T07:12:36.513Z"
+        "checkedAt": "2026-09-28T10:00:38.831Z"
       }
     },
     {
@@ -83,38 +119,7 @@
       "health": {
         "valid": true,
         "issues": [],
-        "checkedAt": "2026-09-24T07:12:36.513Z"
-      }
-    },
-    {
-      "id": "fireworks-tech-graph",
-      "name": "Fireworks Tech Graph",
-      "description": "Create precise SVG technical diagrams, export PNG or offline HTML, and animate supported semantic SVGs to GIF. Use for architecture, UML, agent, cloud or workflow diagrams; not photos, raster art or statistical charts.",
-      "purpose": "生成精确的产品流程、技术关系、架构与工作流 SVG 可视化图表。",
-      "capabilities": [
-        "architecture-diagram",
-        "flowchart",
-        "svg",
-        "technical-diagram",
-        "visual-documentation"
-      ],
-      "status": "enabled",
-      "enabled": true,
-      "installPath": ".workspace/skills/installed/fireworks-tech-graph",
-      "skillFile": ".workspace/skills/installed/fireworks-tech-graph/SKILL.md",
-      "version": "1.2.0",
-      "source": "https://github.com/yizhiyanhua-ai/fireworks-tech-graph",
-      "metadataFiles": [
-        "SKILL.md",
-        "package.json"
-      ],
-      "fingerprint": "sha256:e499af84ccb5e1e7a7bf4cc9d7bfa1d58cd10e63533236874543b36159064653",
-      "scope": "workspace",
-      "deletable": true,
-      "health": {
-        "valid": true,
-        "issues": [],
-        "checkedAt": "2026-09-24T07:12:36.513Z"
+        "checkedAt": "2026-09-28T10:00:38.831Z"
       }
     },
     {
@@ -145,7 +150,7 @@
       "health": {
         "valid": true,
         "issues": [],
-        "checkedAt": "2026-09-24T07:12:36.513Z"
+        "checkedAt": "2026-09-28T10:00:38.831Z"
       }
     },
     {
@@ -180,7 +185,38 @@
       "health": {
         "valid": true,
         "issues": [],
-        "checkedAt": "2026-09-24T07:12:36.513Z"
+        "checkedAt": "2026-09-28T10:00:38.831Z"
+      }
+    },
+    {
+      "id": "web-artifacts-builder",
+      "name": "Web Artifacts Builder",
+      "description": "Suite of tools for creating elaborate, multi-component claude.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simple single-file HTML/JSX artifacts.",
+      "purpose": "将关键功能与用户流程制作成可点击、可切换状态的独立交互原型。",
+      "capabilities": [
+        "clickable-prototype",
+        "html-artifact",
+        "interactive-prototype",
+        "state-management",
+        "ui-flow",
+        "visual-documentation"
+      ],
+      "status": "enabled",
+      "enabled": true,
+      "installPath": ".workspace/skills/installed/web-artifacts-builder",
+      "skillFile": ".workspace/skills/installed/web-artifacts-builder/SKILL.md",
+      "version": null,
+      "source": "https://github.com/anthropics/skills/tree/main/skills/web-artifacts-builder",
+      "metadataFiles": [
+        "SKILL.md"
+      ],
+      "fingerprint": "sha256:81c5002c6643b0de7b8710b00e7a9038daa6fb9b68d59870ee6adb12da8d10f8",
+      "scope": "workspace",
+      "deletable": true,
+      "health": {
+        "valid": true,
+        "issues": [],
+        "checkedAt": "2026-09-28T10:00:38.831Z"
       }
     }
   ]

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "templateVersion": "1.0.0",
+  "templateVersion": "1.0.1",
   "defaultDocument": "开始阅读/项目入口/项目介绍.md",
   "contentRoots": [
     "开始阅读",

@@ -31,7 +31,7 @@ const expectedRules = {
   'knowledge.md': ['稳定语义', 'Frontmatter', 'Document', 'Workspace 不是 Agent 工作日志'],
   'work.md': ['理解任务', '验证结果', 'ADR / Decision', '普通任务不得顺带修改 Harness'],
   'access.md': ['RoleAccessService', 'Workspace Guard', 'System Layer', '不维护 Role × Space 权限表'],
-  'skills.md': ['Skill Registry', 'disabled', 'SKILL.md', '不保存 Skill 清单'],
+  'skills.md': ['Skill Registry', '用户不需要额外提醒 Agent 使用 Skill', 'interactive-prototype', 'disabled', 'SKILL.md', '不保存 Skill 清单'],
   'release.md': ['Current Release', 'Release Registry', 'Git', '不保存当前 Release ID'],
   'handoff.md': ['不得假设', 'Workspace Knowledge', '后继 Agent', '不建立 Agent Session Log'],
 }

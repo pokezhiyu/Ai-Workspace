@@ -25,7 +25,7 @@ assert(registryPath === '.workspace/base-template/registry.json', 'Manifest 的 
 const registry = await readJson(registryPath)
 const current = registry.versions?.find((version) => version.id === registry.current)
 assert(current, 'Base Template Registry 缺少当前版本')
-assert(current.name === 'Base Template V1' && current.version === '1.0.0', '当前模板不是 Base Template V1')
+assert(current.name === 'Base Template V1' && /^1\.\d+\.\d+$/.test(current.version), '当前模板不是 Base Template V1')
 assert(config.templateVersion === current.version, 'Workspace Config 与 Base Template Registry 版本不一致')
 
 const guide = await readJson(current.guidePath)
