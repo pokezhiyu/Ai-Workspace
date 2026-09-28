@@ -3,10 +3,10 @@ id: HARNESS-ACCESS-V1
 title: Access Rules
 type: harness-rule
 domain: workspace
-version: 1.0.0
+version: 1.1.0
 status: active
 owner: engineering
-updated: 2026-09-24
+updated: 2026-09-28
 related:
   - HARNESS-WORKSPACE-V1
 ---
@@ -14,7 +14,7 @@ related:
 # Access Rules
 
 - Workspace 专业知识全局可读。
-- Human Active Role 对应的专业 Space 可写；Agent 继承 Human Active Roles。
+- Human Active Role 的主 Space 与角色定义中显式声明的附加 Space 可写；Agent 继承 Human Active Roles。
 - Agent 不得自行增加、删除或切换 Role，也不得因为读取了某个 Space 就获得写权限。
 - 所有文档写入、创建、重命名、移动和删除必须经过现有 RoleAccessService / Workspace Guard。
 - 跨 Space 移动同时检查来源与目标的写入权限，禁止绕过 Guard。

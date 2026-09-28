@@ -10,6 +10,12 @@ function firstBodyParagraph(body: string): string {
     ?.replace(/[*_`]/g, '') ?? '尚未填写角色职责。'
 }
 
+function metadataStringArray(value: unknown): string[] {
+  return Array.isArray(value)
+    ? [...new Set(value.filter((item): item is string => typeof item === 'string' && Boolean(item.trim())).map((item) => item.trim()))]
+    : []
+}
+
 export function discoverWorkspaceRoles(entries: WorkspaceEntry[]): WorkspaceRoleDefinition[] {
   return entries
     .filter((entry) => entry.kind === 'file' && entry.path.endsWith('.md'))
@@ -24,6 +30,7 @@ export function discoverWorkspaceRoles(entries: WorkspaceEntry[]): WorkspaceRole
         name: document.metadata.title,
         description: firstBodyParagraph(document.body),
         spaceId,
+        accessibleSpaceIds: metadataStringArray(document.metadata.accessibleSpaceIds),
         status: document.metadata.status === 'active' ? 'active' : 'disabled',
         owner: document.metadata.owner,
         version: document.metadata.version,

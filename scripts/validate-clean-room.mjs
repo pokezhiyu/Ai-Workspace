@@ -33,6 +33,7 @@ const activeRoles = await readJson('.workspace/roles/active.json')
 const releases = await readJson('.workspace/releases/registry.json')
 const skills = await readJson('.workspace/skills/registry.json')
 const baseTemplate = await readJson('.workspace/base-template/registry.json')
+const roleRegistry = await readJson('.workspace/roles/registry.json')
 
 assert(manifest.workspace?.id === '', 'Base Template 不应预置 Workspace ID')
 assert(manifest.workspace?.name === '', 'Base Template 不应预置项目名称')
@@ -42,6 +43,8 @@ assert(releases.current === null && releases.releases?.length === 0, 'Base Templ
 assert(!config.contentRoots.includes('空间配置'), '系统空间配置不应进入 Knowledge Layer')
 assert(!config.spaces.some((space) => space.id === 'space-config'), '系统空间配置不应注册为专业 Space')
 assert(/^https:\/\/github\.com\/[^/]+\/[^/]+$/i.test(baseTemplate.sourceRepository), 'Base Template 必须声明稳定的源仓库标识')
+const productRole = roleRegistry.roles?.find((role) => role.id === 'product')
+assert(productRole?.accessibleSpaceIds?.includes('start'), '产品经理必须可以维护“开始阅读”项目入口')
 
 const allowedRolePaths = new Set([
   '产品空间/项目角色/产品经理.md',
@@ -78,6 +81,12 @@ const onboarding = await fs.readFile(path.join(root, 'src', 'components', 'onboa
 for (const phrase of ['下一步', '选择工作角色', '跳过，稍后设置', '保存并进入 Workspace']) {
   assert(onboarding.includes(phrase), `初始化向导缺少“${phrase}”`)
 }
+
+const roleAccessService = await fs.readFile(path.join(root, 'src', 'features', 'roles', 'RoleAccessService.ts'), 'utf8')
+assert(roleAccessService.includes('...role.accessibleSpaceIds'), 'RoleAccessService 必须应用角色的附加可写空间')
+
+const productRoleSource = await fs.readFile(resolveTemplate('产品空间/项目角色/产品经理.md'), 'utf8')
+assert(productRoleSource.includes('accessibleSpaceIds: [start]'), '产品经理角色文档必须声明“开始阅读”写入权限')
 
 const gitPlugin = await fs.readFile(path.join(root, 'server', 'workspaceGitPlugin.ts'), 'utf8')
 const statusHandler = gitPlugin.split("if (pathname === '/api/git/status')")[1]?.split("if (pathname === '/api/git/diff')")[0] ?? ''

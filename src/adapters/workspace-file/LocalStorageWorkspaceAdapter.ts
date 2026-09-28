@@ -388,6 +388,7 @@ function migrateStandardRoleModel(entries: WorkspaceEntry[]): void {
       id: 'product',
       type: 'role',
       spaceId: 'product',
+      accessibleSpaceIds: '[start]',
       replacements: [
         ['负责产品目标、需求定义、范围管理与验收标准，维护项目中的核心产品知识。', '负责产品目标、用户需求、功能需求、业务规则、产品范围和验收标准。'],
       ],
@@ -437,6 +438,7 @@ function migrateStandardRoleModel(entries: WorkspaceEntry[]): void {
     let content = setFrontmatterField(entry.content, 'id', migration.id)
     content = setFrontmatterField(content, 'type', migration.type)
     if ('spaceId' in migration) content = setFrontmatterField(content, 'spaceId', migration.spaceId)
+    if ('accessibleSpaceIds' in migration) content = setFrontmatterField(content, 'accessibleSpaceIds', migration.accessibleSpaceIds)
     if ('parentRole' in migration) content = setFrontmatterField(content, 'parentRole', migration.parentRole)
     for (const [before, after] of migration.replacements) {
       if (!content.includes(after)) content = content.replace(before, after)

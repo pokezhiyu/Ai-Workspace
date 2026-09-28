@@ -54,7 +54,7 @@ export class RoleAccessService {
     const activeRoleIds = new Set(this.getActiveRoleIds(entries))
     const selectedSpaceIds = new Set(this.getRoles(entries)
       .filter((role) => role.status === 'active' && activeRoleIds.has(role.id))
-      .map((role) => role.spaceId))
+      .flatMap((role) => [role.spaceId, ...role.accessibleSpaceIds]))
     return this.getSpaces(entries)
       .filter((space) => selectedSpaceIds.has(space.id))
       .map((space) => space.id)

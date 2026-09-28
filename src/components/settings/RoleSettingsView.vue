@@ -25,7 +25,9 @@ const changed = computed(() => {
   return current.length !== draft.length || current.some((id, index) => id !== draft[index])
 })
 const writableSpaceNames = computed(() => {
-  const spaceIds = new Set(roles.value.filter((role) => selectedIds.value.has(role.id)).map((role) => role.spaceId))
+  const spaceIds = new Set(roles.value
+    .filter((role) => selectedIds.value.has(role.id))
+    .flatMap((role) => [role.spaceId, ...role.accessibleSpaceIds]))
   return store.spaces.filter((space) => spaceIds.has(space.id)).map((space) => space.name)
 })
 
@@ -74,7 +76,7 @@ async function saveRoles(): Promise<void> {
         <div class="settings-section-heading role-selection-heading">
           <div>
             <h2 id="my-roles-title">我的角色</h2>
-            <p>选择的角色对应专业空间可编辑，其他项目知识仍然可以查看和搜索。</p>
+            <p>选择的角色对应空间可编辑，其他项目知识仍然可以查看和搜索。</p>
           </div>
           <button class="button role-select-all" type="button" :disabled="allSelected || saving" @click="selectAll">
             <Check :size="13" />{{ allSelected ? '已全部选择' : '全部选择' }}
@@ -113,7 +115,7 @@ async function saveRoles(): Promise<void> {
         <div class="role-access-summary" :class="{ empty: writableSpaceNames.length === 0 }">
           <div>
             <strong>{{ allSelected ? '你当前负责全部专业工作，适合个人项目。' : '当前可编辑' }}</strong>
-            <span>{{ writableSpaceNames.length ? writableSpaceNames.join('、') : '暂未选择角色，所有专业空间均为只读。' }}</span>
+            <span>{{ writableSpaceNames.length ? writableSpaceNames.join('、') : '暂未选择角色，所有需要角色授权的空间均为只读。' }}</span>
           </div>
           <button class="button primary" type="button" :disabled="!changed || saving" @click="saveRoles">
             <LoaderCircle v-if="saving" class="spin" :size="13" />
@@ -125,7 +127,7 @@ async function saveRoles(): Promise<void> {
 
       <footer class="settings-source-footer">
         <div><strong>角色来源</strong><code>Role Markdown → Role Registry → Active Roles</code></div>
-        <span>Workspace 全局可读，职责空间可写</span>
+        <span>Workspace 全局可读，角色授权空间可写</span>
       </footer>
     </div>
   </section>

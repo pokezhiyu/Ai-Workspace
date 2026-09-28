@@ -6,6 +6,7 @@ export interface WorkspaceRoleDefinition {
   name: string
   description: string
   spaceId: string
+  accessibleSpaceIds: string[]
   status: WorkspaceRoleStatus
   owner?: string
   version?: string

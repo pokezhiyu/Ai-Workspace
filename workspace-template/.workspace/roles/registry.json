@@ -5,7 +5,10 @@
     {
       "id": "product",
       "path": "产品空间/项目角色/产品经理.md",
-      "spaceId": "product"
+      "spaceId": "product",
+      "accessibleSpaceIds": [
+        "start"
+      ]
     },
     {
       "id": "design",
